@@ -1,0 +1,30 @@
+<div>
+    <div class="px-4 sm:px-0">
+      <h3 class="text-2xl font-semibold leading-7 text-gray-900">Informations de l'Utilisateur</h3>
+    </div>
+    <div class="mt-6 border-t border-gray-100">
+      <dl class="divide-y divide-gray-100">
+        <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Nom</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{readUser?.lastname}}</dd>
+        </div>
+        <div class="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Prénom</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{readUser?.firstname}}</dd>
+        </div>
+        <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Pseudo</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{readUser?.pseudo}}</dd>
+        </div>
+        <div class="bg-white px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Email</dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{readUser?.email}}</dd>
+          </div>
+        <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Roles</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{readUser?.roles}}</dd>
+        </div>
+      </dl>
+    </div>
+  </div>
+  
