@@ -9,7 +9,7 @@ import { NotfoundComponent } from './shared/components/notfound/notfound.compone
 
 const routes: Routes = [
   { path : "create-user", component: CreateUserComponent },
-  { path : "update-user", component: UpdateUserComponent },
+  { path : "update-user/:id", component: UpdateUserComponent },
   { path : "list-user", component: ListUserComponent },
   { path : "read-user/:id", component: ReadUserComponent },
   { path : "not-found", component: NotfoundComponent},

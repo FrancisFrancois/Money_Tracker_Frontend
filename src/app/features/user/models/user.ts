@@ -5,6 +5,17 @@ export interface CreateUser {
     pseudo: string;
     email: string;
     password: string;
+    roles: string;
+}
+
+export interface UpdateUser {
+    id: number;
+    lastname: string;
+    firstname: string;
+    pseudo: string;
+    email: string;
+    password: string;
+    roles: string;
 }
 
 export interface ListUser {

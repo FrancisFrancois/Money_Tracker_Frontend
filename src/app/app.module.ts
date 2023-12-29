@@ -9,6 +9,7 @@ import { ListUserComponent } from './features/user/components/list-user/list-use
 import { ReadUserComponent } from './features/user/components/read-user/read-user.component';
 import { HttpClientModule } from '@angular/common/http';
 import { NotfoundComponent } from './shared/components/notfound/notfound.component';
+import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
 
 
@@ -28,7 +29,9 @@ import { NotfoundComponent } from './shared/components/notfound/notfound.compone
   imports: [
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule
+    HttpClientModule,
+    ReactiveFormsModule,
+    FormsModule
   ],
   providers: [],
   bootstrap: [AppComponent]
