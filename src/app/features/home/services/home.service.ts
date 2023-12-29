@@ -21,12 +21,12 @@ export class HomeService {
     return this._httpClient.get<ReadHome>(`${this._url}/${id}`);
   }
 
-  create(createUser : CreateHome): Observable<CreateHome> {
-    return this._httpClient.post<CreateHome>(`${this._url}`, createUser);
+  create(createHome : CreateHome): Observable<CreateHome> {
+    return this._httpClient.post<CreateHome>(`${this._url}`, createHome);
   }
 
-  update(id : number, updateUser : UpdateHome) : Observable<UpdateHome> {
-    return this._httpClient.put<UpdateHome>(`${this._url}/${id}`, updateUser);
+  update(id : number, updateHome : UpdateHome) : Observable<UpdateHome> {
+    return this._httpClient.put<UpdateHome>(`${this._url}/${id}`, updateHome);
   }
 
   delete(id : number) : Observable<CreateHome> {

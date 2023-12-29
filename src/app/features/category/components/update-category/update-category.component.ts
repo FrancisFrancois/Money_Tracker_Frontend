@@ -29,8 +29,8 @@ export class UpdateCategoryComponent {
 
   ngOnInit(): void {
     this._categoryService.getById(this.categoryId).subscribe({
-      next : (user) => {
-        this.updateCategoryForm.patchValue(user);
+      next : (category) => {
+        this.updateCategoryForm.patchValue(category);
       }
     })
   }

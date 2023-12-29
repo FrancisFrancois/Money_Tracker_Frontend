@@ -1,1 +1,36 @@
-<p>create-home works!</p>
+<div class="space-y-10 divide-y divide-gray-900/10">
+    <div class="grid grid-cols-1 gap-x-8 gap-y-8 pt-10 md:grid-cols-3">
+      <div class="px-4 sm:px-0">
+        <h2 class="text-base font-semibold leading-7 text-gray-900">Créer une Maison</h2>
+      </div>
+      <form [formGroup]="createHomeForm" (ngSubmit)="createHome()" class="bg-white shadow-sm ring-1 ring-gray-900/5 sm:rounded-xl md:col-span-2">
+        <div class="px-4 py-6 sm:p-8">
+          <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
+
+            <div class="sm:col-span-3">
+                <label for="user-id" class="block text-sm font-medium leading-6 text-gray-900">Utilisateur</label>
+                <div class="mt-2">
+                  <input type="text" name="user_Id" id="user_Id"  required formControlName="user_Id" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <span class="text-red-600" *ngIf="createHomeForm.get('user_Id')?.touched && createHomeForm.get('user_Id')?.errors?.['required']">Champs requis</span>
+                  <span class="text-red-600" *ngIf="createHomeForm.get('user_Id')?.errors?.['maxlength']">Maximum 10 caractères</span>
+                </div>
+              </div>
+
+            <div class="sm:col-span-3">
+              <label for="name-home" class="block text-sm font-medium leading-6 text-gray-900">Nom de la Maison</label>
+              <div class="mt-2">
+                <input type="text" name="name_Home" id="name_Home"  required formControlName="name_Home" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                <span class="text-red-600" *ngIf="createHomeForm.get('name_Home')?.touched && createHomeForm.get('name_Home')?.errors?.['required']">Champs requis</span>
+                <span class="text-red-600" *ngIf="createHomeForm.get('name_Home')?.errors?.['maxlength']">Maximum 50 caractères</span>
+              </div>
+            </div>
+ 
+          </div>
+        </div>
+        <div class="flex items-center justify-start gap-x-6 border-t border-gray-900/10 px-4 py-4 sm:px-8">
+          <button type="submit" class="rounded-md bg-indigo-600 px-3 py-2 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600">Enregistrer</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  
