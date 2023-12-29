@@ -15,7 +15,6 @@ export class ListUserComponent {
 
   constructor( 
     private  _userService: UserService,
-    private _router : Router
   ) { }
 
   ngOnInit(): void {

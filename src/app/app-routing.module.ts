@@ -5,6 +5,14 @@ import { UpdateUserComponent } from './features/user/components/update-user/upda
 import { ListUserComponent } from './features/user/components/list-user/list-user.component';
 import { ReadUserComponent } from './features/user/components/read-user/read-user.component';
 import { NotfoundComponent } from './shared/components/notfound/notfound.component';
+import { CreateCategoryComponent } from './features/category/components/create-category/create-category.component';
+import { UpdateCategoryComponent } from './features/category/components/update-category/update-category.component';
+import { ListCategoryComponent } from './features/category/components/list-category/list-category.component';
+import { ReadCategoryComponent } from './features/category/components/read-category/read-category.component';
+import { CreateHomeComponent } from './features/home/components/create-home/create-home.component';
+import { UpdateHomeComponent } from './features/home/components/update-home/update-home.component';
+import { ListHomeComponent } from './features/home/components/list-home/list-home.component';
+import { ReadHomeComponent } from './features/home/components/read-home/read-home.component';
 
 
 const routes: Routes = [
@@ -12,7 +20,16 @@ const routes: Routes = [
   { path : "update-user/:id", component: UpdateUserComponent },
   { path : "list-user", component: ListUserComponent },
   { path : "read-user/:id", component: ReadUserComponent },
+  { path : "create-category", component: CreateCategoryComponent },
+  { path : "update-category/:id", component: UpdateCategoryComponent },
+  { path : "list-category", component: ListCategoryComponent },
+  { path : "read-category/:id", component: ReadCategoryComponent },
+  { path : "create-home", component: CreateHomeComponent },
+  { path : "update-home/:id", component: UpdateHomeComponent },
+  { path : "list-home", component: ListHomeComponent },
+  { path : "read-home/:id", component: ReadHomeComponent}, 
   { path : "not-found", component: NotfoundComponent},
+
 ];
 
 @NgModule({

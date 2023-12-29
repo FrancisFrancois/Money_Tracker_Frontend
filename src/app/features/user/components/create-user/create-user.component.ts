@@ -25,7 +25,6 @@ export class CreateUserComponent {
       password : [null, [Validators.required, Validators.maxLength(150), Validators.pattern(/^(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z]).{8,}$/)]],
       roles : [null, [Validators.required]],
     })
-
     }
 
     createUser() {
