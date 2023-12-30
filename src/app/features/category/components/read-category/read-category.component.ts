@@ -17,9 +17,9 @@ export class ReadCategoryComponent {
     private _categoryService : CategoryService,
     private _router : Router,
     ) {
-    let userId = +this._activeRoute.snapshot.params['id'];
+    let categoryId = +this._activeRoute.snapshot.params['id'];
     
-    this._categoryService.getById(userId).subscribe({
+    this._categoryService.getById(categoryId).subscribe({
       next : (response) => {
         this.readCategory = response;
         console.log("Récupération de la catégorie : ", response);

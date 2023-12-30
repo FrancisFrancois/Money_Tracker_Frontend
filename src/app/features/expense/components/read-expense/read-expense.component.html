@@ -1,1 +1,61 @@
-<p>read-expense works!</p>
+<div>
+    <div class="px-4 sm:px-0">
+      <h3 class="text-2xl font-semibold leading-7 text-gray-900">Informations de la Dépense</h3>
+    </div>
+
+    <div class="mt-6 border-t border-gray-100">
+        <dl class="divide-y divide-gray-100">
+          <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Utilisateur</dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{userName}}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="mt-6 border-t border-gray-100">
+        <dl class="divide-y divide-gray-100">
+          <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Maison</dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{homeName}}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="mt-6 border-t border-gray-100">
+        <dl class="divide-y divide-gray-100">
+          <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Catégorie</dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{categoryName}}</dd>
+          </div>
+        </dl>
+      </div>
+
+      <div class="mt-6 border-t border-gray-100">
+        <dl class="divide-y divide-gray-100">
+          <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Montant</dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{readExpense?.amount}}</dd>
+          </div>
+        </dl>
+      </div>
+
+    <div class="mt-6 border-t border-gray-100">
+      <dl class="divide-y divide-gray-100">
+        <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+          <dt class="text-sm font-medium leading-6 text-gray-900">Description</dt>
+          <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{readExpense?.description}}</dd>
+        </div>
+      </dl>
+    </div>
+
+    <div class="mt-6 border-t border-gray-100">
+        <dl class="divide-y divide-gray-100">
+          <div class="bg-gray-50 px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-3">
+            <dt class="text-sm font-medium leading-6 text-gray-900">Date</dt>
+            <dd class="mt-1 text-sm leading-6 text-gray-700 sm:col-span-2 sm:mt-0">{{readExpense?.date_Expense | date: 'dd MMMM yyyy'}}</dd>
+          </div>
+        </dl>
+      </div>
+
+  </div>
+  

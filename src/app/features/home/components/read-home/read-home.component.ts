@@ -2,7 +2,6 @@ import { Component } from '@angular/core';
 import { ReadHome } from '../../models/home';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HomeService } from '../../services/home.service';
-import { ListUser, ReadUser } from 'src/app/features/user/models/user';
 import { UserService } from 'src/app/features/user/services/user.service';
 
 @Component({
@@ -43,7 +42,7 @@ export class ReadHomeComponent {
     });
   }
 
-  loadUser() {
+  loadUser(): void {
     if (this.readHome && this.readHome.users) {
       this.readHome.users.forEach(user => {
         this._userService.getById(user.user_Id).subscribe(userData => {
