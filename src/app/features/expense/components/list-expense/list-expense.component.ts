@@ -18,7 +18,8 @@ export class ListExpenseComponent {
   ngOnInit(): void {
     this._expenseService.getAll().subscribe({
       next : (response) => {
-        this.listExpense = response;
+        this.listExpense = response.sort((a, b) => 
+        new Date(b.date_Expense).getTime() - new Date(a.date_Expense).getTime());
         console.log("Récupération de la liste des dépenses avec succès", response);
       },
       error : (error) => {
@@ -41,7 +42,7 @@ export class ListExpenseComponent {
         console.error("Erreur lors de la suppression de la dépense : ", error);
       },
       complete : () => {
-        console.log("Suppression de la dépense terminée");
+        console.log("Suppression de la  terminée");
       }
     });
   }
