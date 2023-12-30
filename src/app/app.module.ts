@@ -18,6 +18,10 @@ import { CreateHomeComponent } from './features/home/components/create-home/crea
 import { ReadHomeComponent } from './features/home/components/read-home/read-home.component';
 import { UpdateHomeComponent } from './features/home/components/update-home/update-home.component';
 import { ListHomeComponent } from './features/home/components/list-home/list-home.component';
+import { ListExpenseComponent } from './features/expense/components/list-expense/list-expense.component';
+import { CreateExpenseComponent } from './features/expense/components/create-expense/create-expense.component';
+import { ReadExpenseComponent } from './features/expense/components/read-expense/read-expense.component';
+import { UpdateExpenseComponent } from './features/expense/components/update-expense/update-expense.component';
 
 
 
@@ -40,6 +44,10 @@ import { ListHomeComponent } from './features/home/components/list-home/list-hom
     ReadHomeComponent,
     UpdateHomeComponent,
     ListHomeComponent,
+    ListExpenseComponent,
+    CreateExpenseComponent,
+    ReadExpenseComponent,
+    UpdateExpenseComponent,
 
   ],
   imports: [
