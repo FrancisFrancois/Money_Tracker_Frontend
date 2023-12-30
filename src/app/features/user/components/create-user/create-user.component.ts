@@ -27,7 +27,7 @@ export class CreateUserComponent {
     })
     }
 
-    createUser() {
+    createUser(): void {
       if (this.createUserForm.valid) {  
         this._userService.create(this.createUserForm.value).subscribe({
           next: (response) => {

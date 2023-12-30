@@ -23,7 +23,7 @@ export class CreateCategoryComponent {
     })
     }
 
-    createCategory() {
+    createCategory(): void {
       if (this.createCategoryForm.valid) {  
         this._categoryService.create(this.createCategoryForm.value).subscribe({
           next: (response) => {

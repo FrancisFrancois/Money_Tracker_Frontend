@@ -2,7 +2,7 @@ import { Component } from '@angular/core';
 import { ReadHome } from '../../models/home';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HomeService } from '../../services/home.service';
-import { ReadUser } from 'src/app/features/user/models/user';
+import { ListUser, ReadUser } from 'src/app/features/user/models/user';
 import { UserService } from 'src/app/features/user/services/user.service';
 
 @Component({

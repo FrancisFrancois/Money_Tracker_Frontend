@@ -8,14 +8,14 @@
           <div class="grid max-w-2xl grid-cols-1 gap-x-6 gap-y-8 sm:grid-cols-6">
 
             <div class="sm:col-span-3">
-                <label for="user-id" class="block text-sm font-medium leading-6 text-gray-900">Utilisateur</label>
-                <div class="mt-2">
-                  <input type="text" name="user_Id" id="user_Id"  required formControlName="user_Id" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 placeholder:text-gray-400 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
-                  <span class="text-red-600" *ngIf="createHomeForm.get('user_Id')?.touched && createHomeForm.get('user_Id')?.errors?.['required']">Champs requis</span>
-                  <span class="text-red-600" *ngIf="createHomeForm.get('user_Id')?.errors?.['maxlength']">Maximum 10 caractères</span>
-                </div>
+              <label for="user_Id" class="block text-sm font-medium leading-6 text-gray-900">Utilisateur</label>
+              <div class="mt-2">
+                <select id="user_Id" formControlName="user_Id" class="block w-full pl-2 rounded-md border-0 py-1.5 text-gray-900 shadow-sm ring-1 ring-inset ring-gray-300 focus:ring-2 focus:ring-inset focus:ring-indigo-600 sm:text-sm sm:leading-6">
+                  <option *ngFor="let user of users" [value]="user.id">{{ user.firstname }} {{ user.lastname }}</option>
+                </select>
               </div>
-
+            </div>
+            
             <div class="sm:col-span-3">
               <label for="name-home" class="block text-sm font-medium leading-6 text-gray-900">Nom de la Maison</label>
               <div class="mt-2">
