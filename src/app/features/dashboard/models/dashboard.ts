@@ -1,4 +1,4 @@
-export interface ExpenseByDay {
+export interface Expense {
     id : number;
     category_Id: number;
     user_Id: number;

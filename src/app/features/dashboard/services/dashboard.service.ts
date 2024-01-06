@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
-import { ExpenseByDay } from '../models/dashboard';
+import { Expense } from '../models/dashboard';
 import { Observable } from 'rxjs';
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 
 @Injectable({
   providedIn: 'root'
@@ -13,8 +13,138 @@ export class DashboardService {
 
   constructor(private _httpClient: HttpClient) { }
 
-  getExpensesByDay(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<ExpenseByDay[]> {
-    const queryParams = `dateString=${encodeURIComponent(dateString)}${homeId ? `&homeId=${homeId}` : ''}${userId ? `&userId=${userId}` : ''}${categoryId ? `&categoryId=${categoryId}` : ''}`;
-    return this._httpClient.get(`${this._url}/ExpensesByDay?${queryParams}`) as Observable<ExpenseByDay[]>;
+  getExpensesByDay(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
+    let params = new HttpParams().set('dateString', dateString);
+
+    if (homeId !== undefined) {
+      params = params.append('homeId', homeId.toString());
+    }
+    if (userId !== undefined) {
+      params = params.append('userId', userId.toString());
+    }
+    if (categoryId !== undefined) {
+      params = params.append('categoryId', categoryId.toString());
+    }
+
+    return this._httpClient.get<Expense[]>(`${this._url}/ExpensesByDay`, { params });
   }
+
+  getExpensesByWeek(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
+    let params = new HttpParams().set('dateString', dateString);
+
+    if (homeId !== undefined) {
+      params = params.append('homeId', homeId.toString());
+    }
+    if (userId !== undefined) {
+      params = params.append('userId', userId.toString());
+    }
+    if (categoryId !== undefined) {
+      params = params.append('categoryId', categoryId.toString());
+    }
+
+    return this._httpClient.get<Expense[]>(`${this._url}/ExpensesByWeek`, { params });
+  }
+
+  getExpensesByMonth(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
+    let params = new HttpParams().set('dateString', dateString);
+
+    if (homeId !== undefined) {
+      params = params.append('homeId', homeId.toString());
+    }
+    if (userId !== undefined) {
+      params = params.append('userId', userId.toString());
+    }
+    if (categoryId !== undefined) {
+      params = params.append('categoryId', categoryId.toString());
+    }
+
+    return this._httpClient.get<Expense[]>(`${this._url}/ExpensesByMonth`, { params });
+  }
+
+  getExpensesByYear(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
+    let params = new HttpParams().set('dateString', dateString);
+
+    if (homeId !== undefined) {
+      params = params.append('homeId', homeId.toString());
+    }
+    if (userId !== undefined) {
+      params = params.append('userId', userId.toString());
+    }
+    if (categoryId !== undefined) {
+      params = params.append('categoryId', categoryId.toString());
+    }
+
+    return this._httpClient.get<Expense[]>(`${this._url}/ExpensesByYear`, { params });
+  }
+
+  totalExpensesByDay(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
+    let params = new HttpParams().set('dateString', dateString);
+
+    if (homeId !== undefined) {
+      params = params.append('homeId', homeId.toString());
+    }
+    if (userId !== undefined) {
+      params = params.append('userId', userId.toString());
+    }
+    if (categoryId !== undefined) {
+      params = params.append('categoryId', categoryId.toString());
+    }
+
+    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpensesByDay`, { params });
+  }
+
+  totalExpensesByWeek(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
+    let params = new HttpParams().set('dateString', dateString);
+
+    if (homeId !== undefined) {
+      params = params.append('homeId', homeId.toString());
+    }
+    if (userId !== undefined) {
+      params = params.append('userId', userId.toString());
+    }
+    if (categoryId !== undefined) {
+      params = params.append('categoryId', categoryId.toString());
+    }
+
+    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpensesByWeek`, { params });
+  }
+
+  totalExpensesByMonth(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
+    let params = new HttpParams().set('dateString', dateString);
+
+    if (homeId !== undefined) {
+      params = params.append('homeId', homeId.toString());
+    }
+    if (userId !== undefined) {
+      params = params.append('userId', userId.toString());
+    }
+    if (categoryId !== undefined) {
+      params = params.append('categoryId', categoryId.toString());
+    }
+
+    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpensesByMonth`, { params });
+  }
+
+  totalExpensesByYear(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
+    let params = new HttpParams().set('dateString', dateString);
+
+    if (homeId !== undefined) {
+      params = params.append('homeId', homeId.toString());
+    }
+    if (userId !== undefined) {
+      params = params.append('userId', userId.toString());
+    }
+    if (categoryId !== undefined) {
+      params = params.append('categoryId', categoryId.toString());
+    }
+
+    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpensesByYear`, { params });
+  }
+
+
+  
+
+
+
+
 }
