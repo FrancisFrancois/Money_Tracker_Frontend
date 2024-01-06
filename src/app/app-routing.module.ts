@@ -17,6 +17,7 @@ import { CreateExpenseComponent } from './features/expense/components/create-exp
 import { UpdateExpenseComponent } from './features/expense/components/update-expense/update-expense.component';
 import { ListExpenseComponent } from './features/expense/components/list-expense/list-expense.component';
 import { ReadExpenseComponent } from './features/expense/components/read-expense/read-expense.component';
+import { DashboardMonitorComponent } from './features/dashboard/components/dashboard-monitor/dashboard-monitor.component';
 
 
 const routes: Routes = [
@@ -35,7 +36,8 @@ const routes: Routes = [
   { path : "create-expense", component: CreateExpenseComponent },
   { path : "update-expense/:id", component: UpdateExpenseComponent },
   { path : "list-expense", component: ListExpenseComponent },
-  { path : "read-expense/:id", component: ReadExpenseComponent}, 
+  { path : "read-expense/:id", component: ReadExpenseComponent},
+  { path : "dashboard-monitor", component: DashboardMonitorComponent},
   { path : "not-found", component: NotfoundComponent},
 
 ];

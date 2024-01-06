@@ -44,7 +44,7 @@ export class UpdateUserComponent {
     this._userService.update(this.userId, this.updateUserForm.value).subscribe({
       next : () => {
         console.log('L\'utilisateur a été mis à jour');
-        this._router.navigate(['/list-user']);
+        this._router.navigateByUrl('/list-user');
       },
       error : (error) => {
         console.error('Une erreur s\'est produite lors de la mise à jour de l\'utilisateur:', error);

@@ -22,6 +22,9 @@ import { ListExpenseComponent } from './features/expense/components/list-expense
 import { CreateExpenseComponent } from './features/expense/components/create-expense/create-expense.component';
 import { ReadExpenseComponent } from './features/expense/components/read-expense/read-expense.component';
 import { UpdateExpenseComponent } from './features/expense/components/update-expense/update-expense.component';
+import { DashboardMonitorComponent } from './features/dashboard/components/dashboard-monitor/dashboard-monitor.component';
+import { DashboardListComponent } from './features/dashboard/components/dashboard-list/dashboard-list.component';
+import { DashboardChartComponent } from './features/dashboard/components/dashboard-chart/dashboard-chart.component';
 
 
 
@@ -48,6 +51,9 @@ import { UpdateExpenseComponent } from './features/expense/components/update-exp
     CreateExpenseComponent,
     ReadExpenseComponent,
     UpdateExpenseComponent,
+    DashboardMonitorComponent,
+    DashboardChartComponent,
+    DashboardListComponent,
 
   ],
   imports: [
