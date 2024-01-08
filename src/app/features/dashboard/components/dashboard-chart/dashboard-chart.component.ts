@@ -1,9 +1,11 @@
-import { Component, OnInit, ViewChild, ElementRef, AfterViewInit } from '@angular/core';
+import { Component, OnInit, ViewChild, ElementRef } from '@angular/core';
 import { Chart, registerables } from 'chart.js';
 import { DashboardService } from '../../services/dashboard.service';
+import { Expense } from '../../models/dashboard';
+import { ListCategory } from 'src/app/features/category/models/category';
 import { CategoryService } from 'src/app/features/category/services/category.service';
-import { forkJoin } from 'rxjs';
 
+// Enregistrement de tous les types de graphiques disponibles dans Chart.js
 Chart.register(...registerables);
 
 @Component({
@@ -13,37 +15,47 @@ Chart.register(...registerables);
 })
 export class DashboardChartComponent implements OnInit {
   @ViewChild('myChart') myChart!: ElementRef<HTMLCanvasElement>;
-
   chart: any;
   selectedDate?: string;
   selectedPeriodType = 'day';
-  selectedDataView = 'expenses'; 
+  categories: ListCategory[] = [];
+  selectedCategoryId?: number | undefined;
+  expenses: Expense[] = [];
+  colors: string[] = [];
+  
 
   constructor(
     private _dashboardService: DashboardService,
-    private _categoryService: CategoryService 
-  ) { }
+    private _categoryService: CategoryService
+    ) { }
 
   ngOnInit(): void {
-    this.loadDataBasedOnSelection();
     this.selectedDate = this.getCurrentFormattedDate();
+    this.loadDataExpenseByPeriod();
+    this.loadCategories();
   }
 
   getCurrentFormattedDate(): string {
     const today = new Date();
-    return today.toISOString().substring(0, 10); 
+    return today.toISOString().substring(0, 10);
   }
 
   onDateChange(event: Event): void {
     const input = event.target as HTMLInputElement;
     this.selectedDate = input.value;
-    this.loadDataBasedOnSelection();
+    this.loadDataExpenseByPeriod();
   }
 
   onPeriodTypeChange(event: Event): void {
     const select = event.target as HTMLSelectElement;
     this.selectedPeriodType = select.value;
-    this.loadDataBasedOnSelection();
+    this.loadDataExpenseByPeriod();
+  }
+
+  onCategoryChange(event: Event): void {
+    const selectElement = event.target as HTMLSelectElement;
+    this.selectedCategoryId = selectElement.value ? Number(selectElement.value) : undefined;
+    this.loadDataExpenseByPeriod();
   }
 
   formatDateToBackendFormat(date: string): string {
@@ -51,97 +63,64 @@ export class DashboardChartComponent implements OnInit {
     return `${day}/${month}/${year}`;
   }
 
-  loadDataBasedOnSelection(): void {
+  loadDataExpenseByPeriod(): void {
     const formattedDate = this.formatDateToBackendFormat(this.selectedDate ? this.selectedDate : this.getCurrentFormattedDate());
 
-    if (this.selectedDataView === 'expenses') {
-      switch (this.selectedPeriodType) {
-        case 'day':
-          this._dashboardService.getExpensesByDay(formattedDate).subscribe(data => this.createChart(data));
-          break;
-        case 'week':
-          this._dashboardService.getExpensesByWeek(formattedDate).subscribe(data => this.createChart(data));
-          break;
-        case 'month':
-          this._dashboardService.getExpensesByMonth(formattedDate).subscribe(data => this.createChart(data));
-          break;
-        case 'year':
-          this._dashboardService.getExpensesByYear(formattedDate).subscribe(data => this.createChart(data));
-          break;
-      }
-      
+    const dataCallback = (expensesData: Expense[]) => {
+      this.expenses = this.associateCategoryNames(expensesData, this.categories);
+      this.createChart(this.expenses);
+    };
+    
+    switch (this.selectedPeriodType) {
+      case 'day':
+        this._dashboardService.getExpensesByDay(formattedDate, undefined, undefined, this.selectedCategoryId).subscribe(dataCallback);
+        break;
+      case 'week':
+        this._dashboardService.getExpensesByWeek(formattedDate, undefined, undefined,this.selectedCategoryId).subscribe(dataCallback);
+        break;
+      case 'month':
+        this._dashboardService.getExpensesByMonth(formattedDate, undefined, undefined, this.selectedCategoryId).subscribe(dataCallback);
+        break;
+      case 'year':
+        this._dashboardService.getExpensesByYear(formattedDate, undefined, undefined, this.selectedCategoryId).subscribe(dataCallback);
+        break;
     }
   }
-
-  loadChartData(dateString: string): void {
-    forkJoin({
-      categories: this._categoryService.getAll(),
-      expenses: this._dashboardService.getExpensesByDay(dateString)
-    }).subscribe({
-      next: ({ categories, expenses }) => {
-        // Créez un objet pour mapper les catégories avec leur montant total
-        let categoryTotals: { [key: string]: number } = {};
-  
-        expenses.forEach(expense => {
-          const category = categories.find(c => c.id === expense.category_Id);
-          const categoryName = category ? category.category_Name : 'Inconnue';
-          
-          // Initialisez la catégorie dans l'objet si elle n'existe pas encore
-          if (!categoryTotals[categoryName]) {
-            categoryTotals[categoryName] = 0;
-          }
-  
-          // Accumulez les montants pour chaque catégorie
-          categoryTotals[categoryName] += expense.amount;
-        });
-  
-        // Transformez l'objet en tableau pour le graphique
-        const groupedData = Object.entries(categoryTotals).map(([name, amount]) => ({ categoryName: name, amount }));
-  
-        console.log("Grouped data:", groupedData);
-        this.createChart(groupedData);
-      },
-      error: (err) => console.error('Erreur lors du chargement des données', err)
-    });
-  }
-  
   
   
   createChart(data: any[]): void {
     if (this.chart) {
-        this.chart.destroy();
+      this.chart.destroy();
     }
-    
+
     const chartData = {
-        datasets: [{
-            data: data.map((d: any) => d.amount),
-            backgroundColor: this.generateColors(data.length), 
-            hoverOffset: 4,
-        }],
-        labels: data.map((d: any) => d.categoryName),
+      datasets: [{
+        data: data.map(d => d.amount),
+        backgroundColor: this.generateColors(data.length), 
+        hoverOffset: 4,
+      }],
+      labels: data.map(d => d.categoryName),
     };
 
-    console.log("Données du graphique:", chartData);
-  
     this.chart = new Chart(this.myChart.nativeElement, {
-        type: 'doughnut',
-        data: chartData,
-        options: {
-            responsive: true,
-            maintainAspectRatio: true,
-            plugins: {
-                legend: {
-                    display: true,
-                    position: 'top'
-                },
-                title: {
-                    display: true,
-                    text: 'Dépenses par Catégorie'
-                }
-            }
+      type: 'doughnut',
+      data: chartData,
+      options: {
+        responsive: true,
+        maintainAspectRatio: true,
+        plugins: {
+          legend: {
+            display: true,
+            position: 'top'
+          },
+          title: {
+            display: true,
+            text: 'Dépenses par Période'
+          }
         }
+      }
     });
-}
+  }
 
   generateColors(count: number): string[] {
     const colors = [];
@@ -150,4 +129,30 @@ export class DashboardChartComponent implements OnInit {
     }
     return colors;
   }
+
+  loadCategories(): void {
+    this._categoryService.getAll().subscribe(data => {
+      this.categories = data;
+    });
+  }
+
+  associateCategoryNames(expenses: Expense[], categories: ListCategory[]): any[] {
+    // Créer une Map pour un accès rapide aux noms de catégories par ID
+    const categoryMap = new Map(categories.map(c => [c.id, c.category_Name]));
+  
+    // Associer le nom de la catégorie à chaque dépense
+    return expenses.map(expense => ({
+      ...expense,
+      categoryName: categoryMap.get(expense.category_Id) || 'Catégorie Inconnue'
+    }));
+  }
+
+  getCategoryName(categoryId: number): string {
+    const category = this.categories.find(c => c.id === categoryId);
+    console.log(category?.category_Name);
+    return category ? category.category_Name : 'Catégorie Inconnue';
+  }
+  
+  
+  
 }

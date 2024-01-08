@@ -20,14 +20,14 @@ export class ListHomeComponent {
     this._homeService.getAll().subscribe({
       next : (response) => {
         this.listHome = response;
-        console.log("Récupération de la liste des catégories avec succès", response);
+        console.log("Récupération de la liste des maisons avec succès", response);
       },
       error : (error) => {
-        console.error("Erreur lors de la recuperation de la liste des catégories : ", error);
+        console.error("Erreur lors de la recuperation de la liste des maisons : ", error);
       },
       complete : () => {
         this.isLoading = false;
-        console.log("Récupération de la liste des catégories terminée");
+        console.log("Récupération de la liste des maisons terminée");
       }
     });
   }

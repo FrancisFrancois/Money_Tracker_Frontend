@@ -61,17 +61,7 @@ export class UpdateExpenseComponent {
     if (this.updateExpenseForm.valid) {  
       const formData = this.updateExpenseForm.value;
   
-      const expenseData = {
-        id: this.expenseId,
-        category_Id: this.selectedCategoryId,
-        user_Id: this.selectedUserId,
-        home_Id: this.selectedHomeId,
-        amount: formData.amount,
-        description: formData.description,
-        date_Expense: formData.date_Expense
-      };
-
-      this._expenseService.update(this.expenseId, expenseData).subscribe({
+      this._expenseService.update(this.expenseId, formData).subscribe({
         next: () => {
           console.log("Dépense modifié avec succès:");
           this._router.navigateByUrl('/list-expense');

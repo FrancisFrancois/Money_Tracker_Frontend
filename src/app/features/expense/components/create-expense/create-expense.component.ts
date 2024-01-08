@@ -50,17 +50,8 @@ export class CreateExpenseComponent {
     createExpense(): void {
       if (this.createExpenseForm.valid) {  
         const formData = this.createExpenseForm.value;
-    
-        const expenseData = {
-          category_Id: this.selectedCategoryId,
-          user_Id: this.selectedUserId,
-          home_Id: this.selectedHomeId,
-          amount: formData.amount,
-          description: formData.description,
-          date_Expense: formData.date_Expense
-        };
 
-        this._expenseService.create(expenseData).subscribe({
+        this._expenseService.create(formData).subscribe({
           next: (response) => {
             console.log("Dépense ajoutée avec succès:", response);
             this._router.navigateByUrl('/list-expense');
@@ -81,6 +72,7 @@ export class CreateExpenseComponent {
       this._categoryService.getAll().subscribe({
         next: (data) => {
           this.categories = data;
+          console.log(data);
         },
         error: (err) => {
           console.error('Erreur lors du chargement des catégories', err);
@@ -108,6 +100,7 @@ export class CreateExpenseComponent {
 
     onCategoryChange(name: string) {
       this.selectedCategoryId = this.findIdByName(this.categories, name);
+      console.log(this.selectedCategoryId);
     }
   
     onHomeChange(name: string) {

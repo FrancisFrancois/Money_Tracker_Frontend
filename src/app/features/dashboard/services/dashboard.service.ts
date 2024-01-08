@@ -90,7 +90,7 @@ export class DashboardService {
       params = params.append('categoryId', categoryId.toString());
     }
 
-    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpensesByDay`, { params });
+    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpenseByDay`, { params });
   }
 
   totalExpensesByWeek(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
@@ -106,7 +106,7 @@ export class DashboardService {
       params = params.append('categoryId', categoryId.toString());
     }
 
-    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpensesByWeek`, { params });
+    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpenseByWeek`, { params });
   }
 
   totalExpensesByMonth(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
@@ -122,7 +122,7 @@ export class DashboardService {
       params = params.append('categoryId', categoryId.toString());
     }
 
-    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpensesByMonth`, { params });
+    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpenseByMonth`, { params });
   }
 
   totalExpensesByYear(dateString: string, homeId?: number, userId?: number, categoryId?: number): Observable<Expense[]> {
@@ -138,13 +138,6 @@ export class DashboardService {
       params = params.append('categoryId', categoryId.toString());
     }
 
-    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpensesByYear`, { params });
+    return this._httpClient.get<Expense[]>(`${this._url}/TotalExpenseByYear`, { params });
   }
-
-
-  
-
-
-
-
 }
