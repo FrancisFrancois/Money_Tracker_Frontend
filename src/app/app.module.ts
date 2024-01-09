@@ -26,6 +26,8 @@ import { DashboardMonitorComponent } from './features/dashboard/components/dashb
 import { DashboardListComponent } from './features/dashboard/components/dashboard-list/dashboard-list.component';
 import { DashboardChartComponent } from './features/dashboard/components/dashboard-chart/dashboard-chart.component';
 import { AddUserToHomeComponent } from './features/home/components/add-user-to-home/add-user-to-home.component';
+import { RegisterComponent } from './features/auth/components/register/register.component';
+import { LoginComponent } from './features/auth/components/login/login.component';
 
 
 
@@ -56,6 +58,8 @@ import { AddUserToHomeComponent } from './features/home/components/add-user-to-h
     DashboardChartComponent,
     DashboardListComponent,
     AddUserToHomeComponent,
+    LoginComponent,
+    RegisterComponent,
 
   ],
   imports: [

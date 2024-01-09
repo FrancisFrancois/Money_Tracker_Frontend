@@ -19,6 +19,8 @@ import { ListExpenseComponent } from './features/expense/components/list-expense
 import { ReadExpenseComponent } from './features/expense/components/read-expense/read-expense.component';
 import { DashboardMonitorComponent } from './features/dashboard/components/dashboard-monitor/dashboard-monitor.component';
 import { AddUserToHomeComponent } from './features/home/components/add-user-to-home/add-user-to-home.component';
+import { LoginComponent } from './features/auth/components/login/login.component';
+import { RegisterComponent } from './features/auth/components/register/register.component';
 
 
 const routes: Routes = [
@@ -40,6 +42,8 @@ const routes: Routes = [
   { path : "list-expense", component: ListExpenseComponent },
   { path : "read-expense/:id", component: ReadExpenseComponent},
   { path : "dashboard-monitor", component: DashboardMonitorComponent},
+  { path : "login", component: LoginComponent},
+  { path : "register", component: RegisterComponent},
   { path : "not-found", component: NotfoundComponent},
 
 ];
