@@ -18,6 +18,7 @@ import { UpdateExpenseComponent } from './features/expense/components/update-exp
 import { ListExpenseComponent } from './features/expense/components/list-expense/list-expense.component';
 import { ReadExpenseComponent } from './features/expense/components/read-expense/read-expense.component';
 import { DashboardMonitorComponent } from './features/dashboard/components/dashboard-monitor/dashboard-monitor.component';
+import { AddUserToHomeComponent } from './features/home/components/add-user-to-home/add-user-to-home.component';
 
 
 const routes: Routes = [
@@ -33,6 +34,7 @@ const routes: Routes = [
   { path : "update-home/:id", component: UpdateHomeComponent },
   { path : "list-home", component: ListHomeComponent },
   { path : "read-home/:id", component: ReadHomeComponent},
+  { path : "add-user-to-home", component: AddUserToHomeComponent},
   { path : "create-expense", component: CreateExpenseComponent },
   { path : "update-expense/:id", component: UpdateExpenseComponent },
   { path : "list-expense", component: ListExpenseComponent },

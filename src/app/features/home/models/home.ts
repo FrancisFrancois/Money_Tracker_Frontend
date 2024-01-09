@@ -23,4 +23,10 @@ export interface ReadHome {
     }[]; 
 }
 
+export interface AddUserToHome {
+    user_Id: number;
+    home_Id: number;
+    
+}
+
 

@@ -1,7 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
-import { CreateHome, ListHome, ReadHome, UpdateHome } from '../models/home';
+import { AddUserToHome, CreateHome, ListHome, ReadHome, UpdateHome } from '../models/home';
 
 @Injectable({
   providedIn: 'root'
@@ -31,5 +31,9 @@ export class HomeService {
 
   delete(id : number) : Observable<CreateHome> {
     return this._httpClient.delete<CreateHome>(`${this._url}/${id}`);
+  }
+
+  addUserToHome(addUserToHome : AddUserToHome) : Observable<AddUserToHome> {
+    return this._httpClient.post<AddUserToHome>(`${this._url}/AddUserToHome`, addUserToHome);
   }
 }

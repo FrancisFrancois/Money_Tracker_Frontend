@@ -23,7 +23,8 @@ export class CreateHomeComponent {
     private _router: Router
     ) {
     this.createHomeForm = this._fb.group({
-      category_Name : [null, [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\D]*$/)]],
+      user_Id : [null, [Validators.required]],
+      name_Home : [null, [Validators.required, Validators.maxLength(50), Validators.pattern(/^[\D]*$/)]],
     })
     }
 

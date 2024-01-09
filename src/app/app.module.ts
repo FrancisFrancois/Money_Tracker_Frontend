@@ -25,6 +25,7 @@ import { UpdateExpenseComponent } from './features/expense/components/update-exp
 import { DashboardMonitorComponent } from './features/dashboard/components/dashboard-monitor/dashboard-monitor.component';
 import { DashboardListComponent } from './features/dashboard/components/dashboard-list/dashboard-list.component';
 import { DashboardChartComponent } from './features/dashboard/components/dashboard-chart/dashboard-chart.component';
+import { AddUserToHomeComponent } from './features/home/components/add-user-to-home/add-user-to-home.component';
 
 
 
@@ -54,6 +55,7 @@ import { DashboardChartComponent } from './features/dashboard/components/dashboa
     DashboardMonitorComponent,
     DashboardChartComponent,
     DashboardListComponent,
+    AddUserToHomeComponent,
 
   ],
   imports: [

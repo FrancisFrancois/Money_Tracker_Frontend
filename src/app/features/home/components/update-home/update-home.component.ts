@@ -39,7 +39,7 @@ export class UpdateHomeComponent {
     this._homeService.update(this.categoryId, this.updateHomeForm.value).subscribe({
       next : () => {
         console.log('La catégorie a été mis à jour');
-        this._router.navigate(['/user']);
+        this._router.navigateByUrl('/list-home');
       },
       error : (error) => {
         console.error('Une erreur s\'est produite lors de la mise à jour de la catégorie :', error);
