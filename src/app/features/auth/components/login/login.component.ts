@@ -13,7 +13,7 @@ export class LoginComponent {
 
   loginForm : FormGroup;
 
-  errorMessage :string|undefined;
+  errorMessage : string | undefined;
 
   userSubscription : Subscription = new Subscription();
 
@@ -29,11 +29,9 @@ export class LoginComponent {
   }
 
   ngOnInit (): void {
-    this.userSubscription = this._authService.$connectedUser.subscribe({
-      next: (user) => {
-        if (this.errorMessage) {
-          this.errorMessage = this.errorMessage;
-        }
+    this.userSubscription = this._authService.$errorConnection.subscribe({
+      next: (errormessage) => {
+          this.errorMessage = errormessage;
       }
     })
   }
@@ -48,7 +46,7 @@ export class LoginComponent {
         next: (response) => {
           if (response != undefined) {
             this.errorMessage = undefined;
-            this._router.navigateByUrl('/dashboard-chart');
+            this._router.navigateByUrl('/dashboard-monitor');
           }
         },
         error: (error) => {

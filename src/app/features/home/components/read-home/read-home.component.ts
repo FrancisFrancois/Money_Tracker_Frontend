@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ReadHome } from '../../models/home';
+import { AddUserToHome, ReadHome } from '../../models/home';
 import { ActivatedRoute, Router } from '@angular/router';
 import { HomeService } from '../../services/home.service';
 import { UserService } from 'src/app/features/user/services/user.service';
@@ -51,4 +51,22 @@ export class ReadHomeComponent {
       });
     }
   }
+
+// Méthode pour supprimer un utilisateur d'une maison.
+removeUserFromHome(homeId: number, userId: number): void {
+  // Appelle la méthode deleteUserFromHome de HomeService avec les IDs de maison et d'utilisateur.
+  this._homeService.deleteUserFromHome(homeId, userId).subscribe({
+    next: () => {
+      // Logique à exécuter lorsque l'utilisateur est supprimé avec succès.
+      console.log('Utilisateur supprimé avec succès');
+      this._router.navigateByUrl('/list-home');
+      // Ici, vous pouvez mettre à jour l'interface utilisateur, par exemple, en enlevant l'utilisateur de la liste affichée.
+    },
+    error: (error) => {
+      // Gestion des erreurs en cas d'échec de la requête.
+      console.error('Erreur lors de la suppression :', error);
+      // Afficher un message d'erreur à l'utilisateur, si nécessaire.
+    }
+  });
+}
 }

@@ -36,4 +36,8 @@ export class HomeService {
   addUserToHome(addUserToHome : AddUserToHome) : Observable<AddUserToHome> {
     return this._httpClient.post<AddUserToHome>(`${this._url}/AddUserToHome`, addUserToHome);
   }
+
+  deleteUserFromHome(homeId: number, userId: number) : Observable<AddUserToHome> {
+    return this._httpClient.delete<AddUserToHome>(`${this._url}/DeleteUserFromHome/${homeId}/${userId}`);
+  }
 }
