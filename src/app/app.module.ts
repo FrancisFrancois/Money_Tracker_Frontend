@@ -29,10 +29,6 @@ import { AddUserToHomeComponent } from './features/home/components/add-user-to-h
 import { RegisterComponent } from './features/auth/components/register/register.component';
 import { LoginComponent } from './features/auth/components/login/login.component';
 
-
-
-
-
 @NgModule({
   declarations: [
     AppComponent,

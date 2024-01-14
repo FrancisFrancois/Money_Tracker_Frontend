@@ -24,6 +24,7 @@ import { RegisterComponent } from './features/auth/components/register/register.
 
 
 const routes: Routes = [
+  { path: '', redirectTo: '/login', pathMatch: 'full' },
   { path : "create-user", component: CreateUserComponent },
   { path : "update-user/:id", component: UpdateUserComponent },
   { path : "list-user", component: ListUserComponent },
