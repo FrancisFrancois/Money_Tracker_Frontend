@@ -7,7 +7,7 @@ import { CreateUserComponent } from './features/user/components/create-user/crea
 import { UpdateUserComponent } from './features/user/components/update-user/update-user.component';
 import { ListUserComponent } from './features/user/components/list-user/list-user.component';
 import { ReadUserComponent } from './features/user/components/read-user/read-user.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { NotfoundComponent } from './shared/components/notfound/notfound.component';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { CreateCategoryComponent } from './features/category/components/create-category/create-category.component';
@@ -28,6 +28,7 @@ import { DashboardChartComponent } from './features/dashboard/components/dashboa
 import { AddUserToHomeComponent } from './features/home/components/add-user-to-home/add-user-to-home.component';
 import { RegisterComponent } from './features/auth/components/register/register.component';
 import { LoginComponent } from './features/auth/components/login/login.component';
+import { AuthTokenInterceptor } from './shared/components/interceptors/auth-token.interceptor';
 
 @NgModule({
   declarations: [
@@ -65,7 +66,9 @@ import { LoginComponent } from './features/auth/components/login/login.component
     ReactiveFormsModule,
     FormsModule
   ],
-  providers: [],
+  providers: [    
+    { provide : HTTP_INTERCEPTORS, useClass : AuthTokenInterceptor ,multi : true}
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }

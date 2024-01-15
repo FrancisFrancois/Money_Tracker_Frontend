@@ -13,6 +13,8 @@ import { UserService } from 'src/app/features/user/services/user.service';
 export class ReadHomeComponent {
   readHome: ReadHome | undefined;
   userName: string[] = [];
+  userRoles: string[] = []; // Ajout pour stocker les rôles
+
 
   constructor(
     private _activeRoute: ActivatedRoute, 
@@ -46,7 +48,8 @@ export class ReadHomeComponent {
     if (this.readHome && this.readHome.users) {
       this.readHome.users.forEach(user => {
         this._userService.getById(user.user_Id).subscribe(userData => {
-          this.userName[user.user_Id] = `${userData.firstname} ${userData.lastname}`; 
+          this.userName[user.user_Id] = `${userData.firstname} ${userData.lastname}`;
+          this.userRoles[user.user_Id] = userData.roles;
         });
       });
     }

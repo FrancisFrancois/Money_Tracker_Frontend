@@ -80,7 +80,7 @@ loadDataExpenseByPeriod(): void {
   // Fonction de rappel pour traiter les données de dépenses.
   const dataCallback = (expensesData: Expense[]) => {
     // Associe les noms de catégorie aux dépenses et les stocke dans 'this.expenses'.
-    this.expenses = this.associateCategoryNames(expensesData,this.categories);
+    this.expenses = this.associateCategoryNames(expensesData, this.categories);
     // Crée un graphique avec les données traitées.
     this.createChart(this.expenses);
   };
@@ -156,7 +156,6 @@ createChart(expenses: Expense[]): void {
     },
   });
 }
-
 
   // Génère un tableau de couleurs pour le graphique.
   generateColors(): string[] {

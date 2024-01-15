@@ -22,13 +22,9 @@ export class SidebarComponent {
     this._userSub = this._authService.$connectedUser.subscribe({
       next : (value) => {
         this._connectedUser = value;
-        
-        if(value == undefined && localStorage.getItem('money-tracker-token')) {
-
-          this._authService.logout();
-        }
       }
     })
+    this._authService.getUserById();
   }
 
   isConnected() : boolean {

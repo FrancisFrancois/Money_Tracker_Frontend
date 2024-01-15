@@ -24,12 +24,14 @@
             <thead>
               <tr>
                 <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Utilisateurs</th>
+                <th scope="col" class="py-3.5 pl-4 pr-3 text-left text-sm font-semibold text-gray-900 sm:pl-0">Role</th>
                 <th scope="col" class="px-3 py-3.5 text-left text-sm font-semibold text-gray-900">Actions</th>
               </tr>
             </thead>
             <tbody class="divide-y divide-gray-200">
               <tr *ngFor="let user of readHome?.users">
                 <td class="whitespace-nowrap py-4 pl-4 pr-3 text-sm font-medium text-gray-900 sm:pl-0">{{userName[user.user_Id]}}</td>
+                <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">{{ userRoles[user.user_Id] }}</td>
                 <td class="whitespace-nowrap px-3 py-4 text-sm text-gray-500">
                     <button type="button"  (click)="removeUserFromHome(readHome?.id || 0, user.user_Id || 0)"  class="rounded-md bg-indigo-600 px-2.5 py-1.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-600 m-1" >❌</button>
                 </td>

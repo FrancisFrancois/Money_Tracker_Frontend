@@ -43,6 +43,30 @@ export class AuthService {
     return this._connectedUser;
   }
 
+    //TODO : 
+    // au login, rajouter dans le local storage l'id
+    // ici, récupérer cet id
+    // faire une requête pour avoir les infos de l'utilisateur et mettre à jour ton $connectedUser
+  getUserById(): void {
+    const userId = localStorage.getItem('money-tracker-user-id');
+    if(!userId){
+      console.error('User id not found');
+      return undefined;
+    }
+    this._userService.getById(parseInt(userId)).subscribe({
+      next : (response) => {
+        this._connectedUser = response;
+        this._$connectedUser.next(response);
+      },
+      error : (error) => {
+        console.error("Erreur lors de la recuperation de l'utilisateur : ", error);
+      },
+      complete : () => {
+        console.log("Récupération de l'utilisateur terminée");
+      }
+    })
+  }
+
   // Méthode pour gérer le processus de connexion.
   login(login: Login): Observable<ReadUser | undefined> {
     // Suppression du token JWT existant avant la nouvelle connexion.
@@ -58,6 +82,7 @@ export class AuthService {
         console.log(response)
         console.log("User :", response.user.id);
         localStorage.setItem("money-tracker-token", response.accessToken.replace('Bearer ', ''));
+        localStorage.setItem("money-tracker-user-id", response.user.id.toString());
         
         // Récupération des informations de l'utilisateur connecté via UserService.
         this._userService.getById(response.user.id).subscribe({
