@@ -2,3 +2,38 @@
     height: 50%;
     width: 50%
 }
+
+.scrollable-list {
+    height: 600px; 
+    overflow-y: scroll; 
+  }
+  
+  .scrollable-list::-webkit-scrollbar {
+    width: 5px;
+  }
+
+  .scrollable-list::-webkit-scrollbar-thumb {
+    background: rgb(79, 70, 229); 
+    border-radius: 10px;
+  }
+  
+  .scrollable-list::-webkit-scrollbar-thumb:hover {
+    background: #555; 
+  }
+
+  .scrollable-list ul {
+    margin: 10px 0;
+    padding: 10px; 
+    border-radius: 5px; 
+  }
+
+  .container {
+    display: flex; 
+    align-items: flex-start; 
+    justify-content: space-between; 
+  }
+  
+  .graph-container, .scrollable-list {
+    flex: 1; 
+    padding: 10px; 
+  }

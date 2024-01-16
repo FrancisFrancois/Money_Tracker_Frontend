@@ -10,10 +10,9 @@ import { UserService } from '../../user/services/user.service';
   providedIn: 'root'
 })
 export class AuthService {
-
   // URL de l'API pour la connexion.
   private _urlLogin: string = "https://localhost:7272/api/Auth/Login";
-
+  // URL de l'API pour l'inscription.
   private _urlRegister: string = "https://localhost:7272/api/Auth/Register";
 
   // BehaviorSubject pour stocker et observer les changements de l'utilisateur connecté.
@@ -32,91 +31,91 @@ export class AuthService {
   $errorConnection :Observable<string|undefined> = this._$errorConnection.asObservable();
 
   // Constructeur pour injecter HttpClient et UserService.
-  constructor(
-    private _httpClient: HttpClient,
-    private _userService: UserService,
-    ) { }
+  constructor(private _httpClient: HttpClient, private _userService: UserService) { }
 
-    
   // Méthode helper pour obtenir les informations de l'utilisateur connecté actuel.
   getUser(): ReadUser | undefined {
     return this._connectedUser;
   }
 
-    //TODO : 
-    // au login, rajouter dans le local storage l'id
-    // ici, récupérer cet id
-    // faire une requête pour avoir les infos de l'utilisateur et mettre à jour ton $connectedUser
-  getUserById(): void {
-    const userId = localStorage.getItem('money-tracker-user-id');
-    if(!userId){
-      console.error('User id not found');
-      return undefined;
-    }
-    this._userService.getById(parseInt(userId)).subscribe({
-      next : (response) => {
-        this._connectedUser = response;
-        this._$connectedUser.next(response);
-      },
-      error : (error) => {
-        console.error("Erreur lors de la recuperation de l'utilisateur : ", error);
-      },
-      complete : () => {
-        console.log("Récupération de l'utilisateur terminée");
-      }
-    })
+// Méthode pour récupérer l'utilisateur par son ID après la connexion.
+getUserById(): void {
+  // Récupère l'ID de l'utilisateur depuis le stockage local.
+  const userId = localStorage.getItem('money-tracker-user-id');
+  // Vérifie si l'ID de l'utilisateur existe.
+  if(!userId){
+    console.error('User id not found');
+    return undefined;
   }
-
-  // Méthode pour gérer le processus de connexion.
-  login(login: Login): Observable<ReadUser | undefined> {
-    // Suppression du token JWT existant avant la nouvelle connexion.
-    if (localStorage.getItem('money-tracker-token')) {
-      localStorage.removeItem('money-tracker-token');
+  // Utilise le service 'UserService' pour récupérer les informations de l'utilisateur par ID.
+  this._userService.getById(parseInt(userId)).subscribe({
+    next : (response) => {
+      // Met à jour les informations de l'utilisateur connecté.
+      this._connectedUser = response;
+      // Notifie les abonnés du changement de l'utilisateur connecté.
+      this._$connectedUser.next(response);
+    },
+    error : (error) => {
+      // Gestion des erreurs lors de la récupération de l'utilisateur.
+      console.error("Erreur lors de la recuperation de l'utilisateur : ", error);
+    },
+    complete : () => {
+      // Log lorsque la récupération de l'utilisateur est terminée.
+      console.log("Récupération de l'utilisateur terminée");
     }
+  })
+}
 
-    // Envoi de la demande de connexion à l'API et gestion de la réponse.
-    this._httpClient.post<any>(this._urlLogin, login).subscribe({
-      next: (response) => {
-        // Stockage du token JWT dans localStorage après la connexion réussie.
-        console.log("Token :", response.accessToken);
-        console.log(response)
-        console.log("User :", response.user.id);
-        localStorage.setItem("money-tracker-token", response.accessToken.replace('Bearer ', ''));
-        localStorage.setItem("money-tracker-user-id", response.user.id.toString());
-        
-        // Récupération des informations de l'utilisateur connecté via UserService.
-        this._userService.getById(response.user.id).subscribe({
-          next: (response) => {
-            // Mise à jour du BehaviorSubject avec les informations de l'utilisateur connecté.
-            this._$connectedUser.next(response);
-            console.log("Utilisateur connecté :", response);
-          },
-          error: (error) => {
-            // Gestion des erreurs lors de la récupération des informations de l'utilisateur.
-            console.error("Erreur lors de la récupération de l'utilisateur :", error);
-          }
-        });
-      },
-      error: (error) => {
-        // Gestion des erreurs lors de la tentative de connexion.
-        console.error("Erreur lors de la connexion :", error);
-      }
-    });
 
-    // Retour d'un Observable permettant aux composants de s'abonner à l'utilisateur connecté.
-    return this.$connectedUser;
-  }
-
-  // Méthode pour gérer le processus de déconnexion.
-  logout(): void {
-    // Suppression du token JWT de localStorage et réinitialisation de l'utilisateur connecté.
+ // Méthode pour gérer le processus de connexion.
+login(login: Login): Observable<ReadUser | undefined> {
+  // Vérifie si un token existe déjà dans le stockage local et le supprime le cas échéant.
+  if (localStorage.getItem('money-tracker-token')) {
     localStorage.removeItem('money-tracker-token');
-    this._$connectedUser.next(undefined);
-    this._connectedUser = undefined;
   }
 
-  register(register: Register): Observable<Register | undefined> {
-    return this._httpClient.post<Register>(this._urlRegister, register);
-  }
+  // Effectue une requête POST avec les informations de connexion.
+  this._httpClient.post<any>(this._urlLogin, login).subscribe({
+    next: (response) => {
+      // Stocke le token JWT et l'ID de l'utilisateur dans le stockage local.
+      localStorage.setItem("money-tracker-token", response.accessToken.replace('Bearer ', ''));
+      localStorage.setItem("money-tracker-user-id", response.user.id.toString());
+
+      // Récupère les informations complètes de l'utilisateur connecté.
+      this._userService.getById(response.user.id).subscribe({
+        next: (response) => {
+          // Met à jour les informations de l'utilisateur connecté.
+          this._$connectedUser.next(response);
+        },
+        error: (error) => {
+          // Gestion des erreurs lors de la récupération des informations de l'utilisateur.
+          console.error("Erreur lors de la récupération de l'utilisateur :", error);
+        }
+      });
+    },
+    error: (error) => {
+      // Gestion des erreurs lors de la tentative de connexion.
+      console.error("Erreur lors de la connexion :", error);
+    }
+  });
+
+  // Retourne un Observable pour permettre l'abonnement aux changements de l'utilisateur connecté.
+  return this.$connectedUser;
+}
+
+// Méthode pour gérer le processus de déconnexion.
+logout(): void {
+  // Supprime le token JWT du stockage local.
+  localStorage.removeItem('money-tracker-token');
+  // Réinitialise les informations de l'utilisateur connecté.
+  this._$connectedUser.next(undefined);
+  this._connectedUser = undefined;
+}
+
+// Méthode pour gérer le processus d'inscription.
+register(register: Register): Observable<Register | undefined> {
+  // Envoie une requête POST pour enregistrer un nouvel utilisateur.
+  return this._httpClient.post<Register>(this._urlRegister, register);
+}
 
 }

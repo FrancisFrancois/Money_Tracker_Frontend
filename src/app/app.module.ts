@@ -22,8 +22,6 @@ import { ListExpenseComponent } from './features/expense/components/list-expense
 import { CreateExpenseComponent } from './features/expense/components/create-expense/create-expense.component';
 import { ReadExpenseComponent } from './features/expense/components/read-expense/read-expense.component';
 import { UpdateExpenseComponent } from './features/expense/components/update-expense/update-expense.component';
-import { DashboardMonitorComponent } from './features/dashboard/components/dashboard-monitor/dashboard-monitor.component';
-import { DashboardListComponent } from './features/dashboard/components/dashboard-list/dashboard-list.component';
 import { DashboardChartComponent } from './features/dashboard/components/dashboard-chart/dashboard-chart.component';
 import { AddUserToHomeComponent } from './features/home/components/add-user-to-home/add-user-to-home.component';
 import { RegisterComponent } from './features/auth/components/register/register.component';
@@ -51,9 +49,7 @@ import { AuthTokenInterceptor } from './shared/components/interceptors/auth-toke
     CreateExpenseComponent,
     ReadExpenseComponent,
     UpdateExpenseComponent,
-    DashboardMonitorComponent,
     DashboardChartComponent,
-    DashboardListComponent,
     AddUserToHomeComponent,
     LoginComponent,
     RegisterComponent,

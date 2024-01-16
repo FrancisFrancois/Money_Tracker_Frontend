@@ -38,7 +38,7 @@ export class CreateExpenseComponent {
       user_Id : [null, [Validators.required]],
       home_Id : [null, [Validators.required]],
       amount : [null, [Validators.required]],
-      description : [null, [Validators.required, Validators.maxLength(300), Validators.pattern(/^[\D]*$/)]],
+      description : [null, [Validators.required, Validators.maxLength(300)]],
       date_Expense : [null, [Validators.required]],
     })
     }

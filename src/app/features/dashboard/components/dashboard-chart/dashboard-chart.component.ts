@@ -75,87 +75,95 @@ export class DashboardChartComponent implements OnInit {
 // Charge les données de dépenses en fonction de la période sélectionnée.
 loadDataExpenseByPeriod(): void {
   // Formatte la date sélectionnée ou utilise la date actuelle si aucune date n'est sélectionnée.
+  // 'this.formatDateToBackendFormat' est la fonction qui convertit les dates au format attendu par le backend.
   const formattedDate = this.formatDateToBackendFormat(this.selectedDate ? this.selectedDate : this.getCurrentFormattedDate());
 
-  // Fonction de rappel pour traiter les données de dépenses.
+  // Fonction de rappel pour traiter les données de dépenses reçues.
   const dataCallback = (expensesData: Expense[]) => {
-    // Associe les noms de catégorie aux dépenses et les stocke dans 'this.expenses'.
+    // Associe les noms de catégories aux dépenses et les stocke dans 'this.expenses'.
     this.expenses = this.associateCategoryNames(expensesData, this.categories);
-    // Crée un graphique avec les données traitées.
+
+    // Trie 'this.expenses' par date en ordre décroissant.
+    this.sortExpensesByDate(); 
+
+    // Crée un graphique avec les données triées et associées.
     this.createChart(this.expenses);
   };
-
-  // Structure conditionnelle pour charger les données en fonction de la période sélectionnée.
+  
+  // Sélectionne la méthode de chargement des données en fonction de 'this.selectedPeriodType'.
   switch (this.selectedPeriodType) {
     case 'day':
-      // Charge les données de dépenses pour le jour sélectionné.
+      // Charge les données de dépenses pour le jour sélectionné
       this._dashboardService.getExpensesByDay(formattedDate, undefined, undefined, this.selectedCategoryId).subscribe(dataCallback);
       break;
     case 'week':
-      // Charge les données de dépenses pour la semaine sélectionnée.
+      // Charge les données de dépenses pour la semaine sélectionnée
       this._dashboardService.getExpensesByWeek(formattedDate, undefined, undefined, this.selectedCategoryId).subscribe(dataCallback);
       break;
     case 'month':
-      // Charge les données de dépenses pour le mois sélectionné.
+      // Charge les données de dépenses pour le mois sélectionné
       this._dashboardService.getExpensesByMonth(formattedDate, undefined, undefined, this.selectedCategoryId).subscribe(dataCallback);
       break;
     case 'year':
-      // Charge les données de dépenses pour l'année sélectionnée.
+      // Charge les données de dépenses pour l'année sélectionnée
       this._dashboardService.getExpensesByYear(formattedDate, undefined, undefined, this.selectedCategoryId).subscribe(dataCallback);
       break;
   }
 }
 
 
- // Crée et configure le graphique avec les données fournies.
+
+// Crée et configure le graphique avec les données fournies.
 createChart(expenses: Expense[]): void {
-  // Vérifie si un graphique existe déjà et le détruit pour éviter les superpositions.
+  // Vérifie si un graphique existe déjà dans 'this.chart' et le détruit.
+  // Ceci est fait pour éviter la superposition de graphiques si la méthode est appelée plusieurs fois.
   if (this.chart) {
     this.chart.destroy();
   }
 
-  // Utilise une Map pour agréger les montants des dépenses par catégorie.
-  const aggregatedData = new Map<string, number>();
+  // Utilise une Map pour regrouper les montants des dépenses par catégorie.
+  const groupExpense = new Map<string, number>();
 
-  // Parcourt chaque dépense et accumule le montant dans la catégorie correspondante.
+  // Parcourt chaque dépense dans le tableau 'expenses'.
+  // Pour chaque dépense, le montant est accumulé dans la catégorie correspondante.
   expenses.forEach(expense => {
     const categoryName = this.getCategoryName(expense.category_Id);
-    aggregatedData.set(categoryName, (aggregatedData.get(categoryName) || 0) + expense.amount);
+    groupExpense.set(categoryName, (groupExpense.get(categoryName) || 0) + expense.amount);
   });
 
-  // Prépare les données pour le graphique.
+  // Prépare les données pour le graphique, incluant les données et les étiquettes.
   const chartData = {
     datasets: [{
-      // Utilise les montants agrégés pour les données du graphique.
-      data: Array.from(aggregatedData.values()),
-      // Appelle `generateColors` pour définir les couleurs des segments du graphique.
+      // Les montants  par catégorie sont utilisés ici comme données pour le graphique.
+      data: Array.from(groupExpense.values()),
       backgroundColor: this.generateColors(),
-      hoverOffset: 4,
+      hoverOffset: 4, // Définit un décalage au survol pour les segments du graphique.
     }],
-    // Utilise les noms des catégories comme étiquettes pour le graphique.
-    labels: Array.from(aggregatedData.keys()),
+    labels: Array.from(groupExpense.keys()), // Les noms de catégorie servent d'étiquettes pour le graphique.
   };
 
-  // Crée le graphique en utilisant la bibliothèque Chart.js avec les données et options définies.
+  // Crée un nouveau graphique en utilisant la bibliothèque Chart.js.
+
   this.chart = new Chart(this.myChart.nativeElement, {
     type: 'doughnut',
     data: chartData,
     options: {
-      responsive: true,
-      maintainAspectRatio: true,
+      responsive: true, // Rend le graphique réactif au redimensionnement de la fenêtre.
+      maintainAspectRatio: true, // Maintient l'aspect ratio du graphique lors du redimensionnement.
       plugins: {
         legend: {
-          display: true,
-          position: 'top',
+          display: true, // Affiche la légende.
+          position: 'top', // Positionne la légende en haut.
         },
         title: {
-          display: true,
-          text: 'Dépenses par Catégorie',
+          display: true, // Affiche un titre.
+          text: 'Dépenses par Catégorie', 
         },
       },
     },
   });
 }
+
 
   // Génère un tableau de couleurs pour le graphique.
   generateColors(): string[] {
@@ -168,27 +176,60 @@ createChart(expenses: Expense[]): void {
     ];
   }
   
-  // Charge les catégories depuis le service et les stocke dans 'this.categories'.
-  loadCategories(): void {
-    this._categoryService.getAll().subscribe((data) => {
-      this.categories = data;
+// Charge les catégories depuis le service et les stocke dans 'this.categories'.
+loadCategories(): void {
+  this._categoryService.getAll().subscribe((data) => {
+    // Ici, 'data' contient  un tableau d'objets de catégorie retournés par le service.
+    this.categories = data;
+  });
+}
+
+
+// Associe les noms de catégorie aux dépenses en utilisant une Map pour un accès rapide.
+associateCategoryNames(expenses: Expense[], categories: ListCategory[]): any[] {
+  // Crée une Map où chaque clé est un ID de catégorie et chaque valeur est le nom de la catégorie correspondante.
+  // Ceci est fait en mappant le tableau 'categories', qui est un tableau d'objets avec des propriétés 'id' et 'category_Name'.
+  const categoryMap = new Map(categories.map((c) => [c.id, c.category_Name]));
+
+  // Transforme le tableau 'expenses' en mappant chaque dépense à un nouvel objet.
+  // Ce nouvel objet est une copie de l'objet de dépense original (en utilisant l'opérateur de propagation '...expense'),
+  // avec l'ajout ou la modification de la propriété 'categoryName'.
+  return expenses.map((expense) => ({
+    ...expense,
+    categoryName:
+      // Récupère le nom de la catégorie associé à 'category_Id' de la dépense depuis 'categoryMap'.
+      // Si l'ID de catégorie n'est pas trouvé dans 'categoryMap', utilise 'Catégorie Inconnue' comme valeur par défaut.
+      categoryMap.get(expense.category_Id) || 'Catégorie Inconnue',
+  }));
+}
+
+
+// Renvoie le nom de la catégorie basé sur l'ID de la catégorie.
+getCategoryName(categoryId: number): string {
+  // Recherche dans le tableau 'categories' pour trouver l'objet de catégorie correspondant.
+  // 'categories' est probablement un tableau d'objets, chacun ayant un 'id' et un 'category_Name'.
+  const category = this.categories.find((c) => c.id === categoryId);
+
+  // Vérifie si un objet de catégorie correspondant a été trouvé.
+  // Si oui, renvoie le nom de cette catégorie (category.category_Name).
+  // Si non (c'est-à-dire, aucun objet avec l'ID fourni n'a été trouvé, et 'category' est 'undefined'),
+  // renvoie la chaîne 'Catégorie Inconnue'.
+  return category ? category.category_Name : 'Catégorie Inconnue';
+}
+
+
+  sortExpensesByDate(): void {
+    this.expenses.sort((a, b) => {
+      // Convertit les chaînes de caractères 'date_Expense' en objets Date pour chaque élément du tableau.
+      const dateA = new Date(a.date_Expense);
+      const dateB = new Date(b.date_Expense);
+  
+      // Compare les dates: renvoie une valeur négative si dateB est plus récente que dateA,
+      // une valeur positive si dateA est plus récente que dateB,
+      // et zéro si elles sont égales.
+      // Cela permet de trier le tableau 'expenses' en ordre décroissant de dates.
+      return dateB.getTime() - dateA.getTime(); 
     });
   }
-
-  // Associe les noms de catégorie aux dépenses en utilisant une Map pour un accès rapide.
-  associateCategoryNames(expenses: Expense[], categories: ListCategory[]): any[] {
-    const categoryMap = new Map(categories.map((c) => [c.id, c.category_Name]));
-
-    return expenses.map((expense) => ({
-      ...expense,
-      categoryName:
-        categoryMap.get(expense.category_Id) || 'Catégorie Inconnue', // Associe le nom de la catégorie ou un placeholder si non trouvé.
-    }));
-  }
-
-  // Renvoie le nom de la catégorie basé sur l'ID de la catégorie.
-  getCategoryName(categoryId: number): string {
-    const category = this.categories.find((c) => c.id === categoryId);
-    return category ? category.category_Name : 'Catégorie Inconnue';
-  }
+  
 }
