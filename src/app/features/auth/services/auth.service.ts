@@ -44,7 +44,6 @@ getUserById(): void {
   const userId = localStorage.getItem('money-tracker-user-id');
   // Vérifie si l'ID de l'utilisateur existe.
   if(!userId){
-    console.error('User id not found');
     return undefined;
   }
   // Utilise le service 'UserService' pour récupérer les informations de l'utilisateur par ID.
@@ -78,6 +77,8 @@ login(login: Login): Observable<ReadUser | undefined> {
   this._httpClient.post<any>(this._urlLogin, login).subscribe({
     next: (response) => {
       // Stocke le token JWT et l'ID de l'utilisateur dans le stockage local.
+      console.log(response);
+      console.log("User :", response.user);
       localStorage.setItem("money-tracker-token", response.accessToken.replace('Bearer ', ''));
       localStorage.setItem("money-tracker-user-id", response.user.id.toString());
 
@@ -86,6 +87,7 @@ login(login: Login): Observable<ReadUser | undefined> {
         next: (response) => {
           // Met à jour les informations de l'utilisateur connecté.
           this._$connectedUser.next(response);
+          console.log("Utilisateur connecté :", response);
         },
         error: (error) => {
           // Gestion des erreurs lors de la récupération des informations de l'utilisateur.
@@ -107,6 +109,7 @@ login(login: Login): Observable<ReadUser | undefined> {
 logout(): void {
   // Supprime le token JWT du stockage local.
   localStorage.removeItem('money-tracker-token');
+  localStorage.removeItem('money-tracker-user-id');
   // Réinitialise les informations de l'utilisateur connecté.
   this._$connectedUser.next(undefined);
   this._connectedUser = undefined;

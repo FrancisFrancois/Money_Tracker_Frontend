@@ -36,7 +36,7 @@ export class LoginComponent {
 
   // Hook ngOnInit pour initialiser les composants.
   ngOnInit (): void {
-    // S'abonne à un observable pour recevoir des messages d'erreur d'authentification.
+    // S'abonne à un observable les messages d'erreur d'authentification.
     this.userSubscription = this._authService.$errorConnection.subscribe({
       next: (errormessage) => {
           this.errorMessage = errormessage;
